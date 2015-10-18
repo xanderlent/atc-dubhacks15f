@@ -3,6 +3,7 @@ package com.xanderlent.android.mmatc;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 
 import com.squareup.otto.Bus;
@@ -12,9 +13,13 @@ import com.squareup.otto.Subscribe;
 import java.util.Collection;
 
 public class BackendService extends Service {
+    private static final int TICK_RATE = 3000;
+
     private final IBinder backendBinder;
     private static Bus backendBus; // The Bus is a singleton, according to Otto docs...
     private Backend backend;
+    private Handler handler;
+    private boolean alive = true;
 
     /* Initialize the BackendService */
     public BackendService() {
@@ -23,7 +28,8 @@ public class BackendService extends Service {
         backendBus.register(this);
         backendBinder = new BackendBinder();
         // ^ Register so as to subscribe to user changed plane event notifications
-        // TODO Create Timer/AlarmManager to trigger tick()
+        handler = new Handler();
+        handler.postDelayed(tickRunnable, TICK_RATE);
     }
 
     /* Give the component binding this service a reference to the BackendBinder. */
@@ -79,5 +85,21 @@ public class BackendService extends Service {
         public Collection<Plane> getPlanes() {
             return planes;
         }
+    }
+
+    private Runnable tickRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if(alive) {
+                tick();
+                handler.postDelayed(tickRunnable, TICK_RATE);
+            }
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        alive = false;
+        super.onDestroy();
     }
 }

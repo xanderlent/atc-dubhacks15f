@@ -65,7 +65,6 @@ public class GameActivity extends AppCompatActivity {
 
     /* Handle the various cases for the four actions' buttons. */
     public void upClicked(View view) {
-        Snackbar.make(planeView, "UP Clicked!", Snackbar.LENGTH_SHORT).show();
         if (selectedPlane != null) {
             UserChangedAltitudeEvent event;
             int newAltitude = selectedPlane.getAltitude() + 1;
@@ -75,7 +74,6 @@ public class GameActivity extends AppCompatActivity {
         // NOP
     }
     public void downClicked(View view) {
-        Snackbar.make(planeView, "DOWN Clicked!", Snackbar.LENGTH_SHORT).show();
         if (selectedPlane != null) {
             UserChangedAltitudeEvent event;
             int newAltitude = selectedPlane.getAltitude() - 1;
@@ -85,7 +83,6 @@ public class GameActivity extends AppCompatActivity {
         // NOP
     }
     public void rightClicked(View view) {
-        Snackbar.make(planeView, "RIGHT Clicked!", Snackbar.LENGTH_SHORT).show();
         if (selectedPlane != null) {
             UserChangedDirectionEvent event;
             Direction newDirection = selectedPlane.getDirection().right();
@@ -95,7 +92,6 @@ public class GameActivity extends AppCompatActivity {
         // NOP
     }
     public void leftClicked(View view) {
-        Snackbar.make(planeView, "LEFT Clicked!", Snackbar.LENGTH_SHORT).show();
         if (selectedPlane != null) {
             UserChangedDirectionEvent event;
             Direction newDirection = selectedPlane.getDirection().left();

@@ -36,6 +36,7 @@ public class Plane {
     public Plane(String name, Position position, Direction direction, int destinationExitNo) {
         this.name = name;
         this.altitude = DEFAULT_ALTITUDE;
+        this.targetAltitude = DEFAULT_ALTITUDE;
         this.position = position;
         this.direction = direction;
         this.destinationExitNo = destinationExitNo;
