@@ -11,18 +11,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 
 import com.squareup.otto.Bus;
-import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
-
-import java.util.Arrays;
 
 public class GameActivity extends AppCompatActivity {
     private PlaneView planeView;
     private Bus backendBus;
-    boolean isBound = false;
+    private boolean isBound;
+    private Plane selectedPlane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +31,14 @@ public class GameActivity extends AppCompatActivity {
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-       // getActionBar().setDisplayHomeAsUpEnabled(true);
+        selectedPlane = null;
         planeView = (PlaneView)findViewById(R.id.planeView);
         planeView.setSelectionChangeCallback(new PlaneView.SelectionChangeCallback() {
             @Override
             public void onSelectionChanged(PlaneView planeView, Plane selectedPlane) {
                 //Toast.makeText(getApplicationContext(), selectedPlane == null ? "you deselected that plane, sad days" : "you clicked my best friend " + selectedPlane.getName(), Toast.LENGTH_SHORT).show();
-                Snackbar.make(planeView, selectedPlane == null ? "you deselected that plane, sad days" : "you clicked my best friend " + selectedPlane.getName(), Snackbar.LENGTH_SHORT).show();
+                //Snackbar.make(planeView, selectedPlane == null ? "you deselected that plane, sad days" : "you clicked my best friend " + selectedPlane.getName(), Snackbar.LENGTH_SHORT).show();
+                GameActivity.this.selectedPlane = selectedPlane;
             }
         });
     }
@@ -53,6 +51,8 @@ public class GameActivity extends AppCompatActivity {
         bindService(intent, backendConnection, Context.BIND_AUTO_CREATE);
     }
 
+    // TODO: Implement onResume & onDestroy b/c Android says we have to!
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -63,21 +63,44 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    //TODO: BUTTONS
     public void upClicked(View view) {
         Snackbar.make(planeView, "UP Clicked!", Snackbar.LENGTH_SHORT).show();
+        if (selectedPlane != null) {
+            UserChangedAltitudeEvent event;
+            int newAltitude = selectedPlane.getAltitude() + 1;
+            event = new UserChangedAltitudeEvent(selectedPlane, newAltitude);
+            backendBus.post(event);
+        }
         // NOP
     }
     public void downClicked(View view) {
         Snackbar.make(planeView, "DOWN Clicked!", Snackbar.LENGTH_SHORT).show();
+        if (selectedPlane != null) {
+            UserChangedAltitudeEvent event;
+            int newAltitude = selectedPlane.getAltitude() - 1;
+            event = new UserChangedAltitudeEvent(selectedPlane, newAltitude);
+            backendBus.post(event);
+        }
         // NOP
     }
     public void rightClicked(View view) {
         Snackbar.make(planeView, "RIGHT Clicked!", Snackbar.LENGTH_SHORT).show();
+        if (selectedPlane != null) {
+            UserChangedDirectionEvent event;
+            Direction newDirection = selectedPlane.getDirection().right();
+            event = new UserChangedDirectionEvent(selectedPlane, newDirection);
+            backendBus.post(event);
+        }
         // NOP
     }
     public void leftClicked(View view) {
         Snackbar.make(planeView, "LEFT Clicked!", Snackbar.LENGTH_SHORT).show();
+        if (selectedPlane != null) {
+            UserChangedDirectionEvent event;
+            Direction newDirection = selectedPlane.getDirection().left();
+            event = new UserChangedDirectionEvent(selectedPlane, newDirection);
+            backendBus.post(event);
+        }
         // NOP
     }
 
@@ -107,13 +130,31 @@ public class GameActivity extends AppCompatActivity {
         planeView.setPlanes(event.getPlanes());
     }
 
+    public class UserChangedAltitudeEvent {
+        private Plane plane;
+        private int increment;
+
+        public UserChangedAltitudeEvent(Plane plane, int increment) {
+            this.plane = plane;
+            this.increment = increment;
+        }
+
+        public Plane getPlane() {
+            return plane;
+        }
+
+        public int getIncrement() {
+            return increment;
+        }
+    }
+
     public class UserChangedDirectionEvent {
         private Plane plane;
         private Direction direction;
 
-        public UserChangedDirectionEvent(Plane plane, Direction direction) {
+        public UserChangedDirectionEvent(Plane plane, Direction newDirection) {
             this.plane = plane;
-            this.direction = direction;
+            this.direction = newDirection;
         }
 
         public Plane getPlane() {
@@ -122,24 +163,6 @@ public class GameActivity extends AppCompatActivity {
 
         public Direction getDirection() {
             return direction;
-        }
-    }
-
-    public class UserChangedAltitudeEvent {
-        private Plane plane;
-        private int targetAltitude;
-
-        public UserChangedAltitudeEvent(Plane plane, int targetAltitude) {
-            this.plane = plane;
-            this.targetAltitude = targetAltitude;
-        }
-
-        public Plane getPlane() {
-            return plane;
-        }
-
-        public int getTargetAltitude() {
-            return targetAltitude;
         }
     }
 }
