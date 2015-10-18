@@ -36,6 +36,7 @@
 
         android:layout_above="@+id/planstatusbar"
         android:layout_alignParentLeft="true">
+
         <Button
             android:text="@string/down_button_label"
             android:layout_width="wrap_content"
