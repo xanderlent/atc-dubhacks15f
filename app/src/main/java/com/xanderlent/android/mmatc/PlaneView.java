@@ -10,9 +10,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 public class PlaneView extends View {
-    private Paint paint;
-    private Rect rect;
-
     public PlaneView(Context context) {
         super(context);
         init(null, 0);
@@ -32,10 +29,7 @@ public class PlaneView extends View {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.PlaneView, defStyle, 0);
-        paint = new Paint();
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.MAGENTA);
-        rect = new Rect(0, 0, getWidth(), getHeight());
+
         a.recycle();
     }
 
@@ -43,6 +37,9 @@ public class PlaneView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawRect(rect, paint);
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.MAGENTA);
+        canvas.drawRect(new Rect(0, 0, getWidth(), getHeight()), paint);
     }
 }
