@@ -125,7 +125,7 @@ public class PlaneView extends View {
                 case SOUTH: canvas.rotate(180); break;
                 case SOUTH_WEST: canvas.rotate(225); break;
                 case WEST: canvas.rotate(270); break;
-                case NORTH_WEST: canvas.rotate(335); break;
+                case NORTH_WEST: canvas.rotate(315); break;
             }
             canvas.drawPath(path, fillPaint);
             canvas.drawPath(path, strokePaint);
