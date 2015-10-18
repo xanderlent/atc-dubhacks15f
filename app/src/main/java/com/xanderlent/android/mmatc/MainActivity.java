@@ -1,8 +1,8 @@
 package com.xanderlent.android.mmatc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -20,11 +20,15 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-            //TODO make intent and connect to the gaming activity
+
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "This will launch the game", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "This will launch the game", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Intent intent;
+                intent = new Intent(getApplicationContext(), GameActivity.class);
+                startActivity(intent);
+
             }
         });
 
