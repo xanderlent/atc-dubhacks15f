@@ -51,9 +51,8 @@ public class BackendService extends Service {
 
     /* Process one tick (step) of the model/backend. */
     private void tick() {
-        backend.tick(); // Step the backend
-        backendBus.post(new PlanesChangedEvent(backend.getPlanes()));
-        // ^ Create a message notifying clients that the Planes have changed.
+        backend.tick();
+        firePlanesChanged();
     }
 
     /* Get notified about events due to the user changing altitude, and update accordingly. */
@@ -66,6 +65,11 @@ public class BackendService extends Service {
     @Subscribe
     public void userChangedDirection(GameActivity.UserChangedDirectionEvent event) {
         backend.turnPlane(event.getPlane(), event.getDirection());
+        firePlanesChanged();
+    }
+
+    private void firePlanesChanged() {
+        backendBus.post(producePlanesChangedEvent());
     }
 
     /* Automatically create a PlanesChangedEvent when said event is subscribed to. */
