@@ -9,4 +9,5 @@
     <string name="up_button_label">UP</string>
     <string name="left_button_label">LEFT</string>
     <string name="right_button_label">RIGHT</string>
+    <string name="alt_status_text">Destination: E%d</string>
 </resources>

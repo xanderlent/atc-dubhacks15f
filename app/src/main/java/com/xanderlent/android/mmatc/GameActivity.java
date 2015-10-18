@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -20,6 +21,7 @@ public class GameActivity extends AppCompatActivity {
     private Bus backendBus;
     private boolean isBound;
     private Plane selectedPlane;
+    private TextView altStatusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +38,12 @@ public class GameActivity extends AppCompatActivity {
         planeView.setSelectionChangeCallback(new PlaneView.SelectionChangeCallback() {
             @Override
             public void onSelectionChanged(PlaneView planeView, Plane selectedPlane) {
-                //Toast.makeText(getApplicationContext(), selectedPlane == null ? "you deselected that plane, sad days" : "you clicked my best friend " + selectedPlane.getName(), Toast.LENGTH_SHORT).show();
-                //Snackbar.make(planeView, selectedPlane == null ? "you deselected that plane, sad days" : "you clicked my best friend " + selectedPlane.getName(), Snackbar.LENGTH_SHORT).show();
                 GameActivity.this.selectedPlane = selectedPlane;
+                updatePlaneStatusTexts();
+
             }
         });
+        altStatusText = (TextView)findViewById(R.id.alt_status);
     }
 
     @Override
@@ -126,6 +129,15 @@ public class GameActivity extends AppCompatActivity {
     @Subscribe
     public void onPlanesChanged(BackendService.PlanesChangedEvent event) {
         planeView.setPlanes(event.getPlanes());
+        updatePlaneStatusTexts();
+    }
+
+    private void updatePlaneStatusTexts() {
+        if(selectedPlane == null) {
+            altStatusText.setText("");
+        }else {
+            altStatusText.setText(getString(R.string.alt_status_text, selectedPlane.getDestinationExitNo()));
+        }
     }
 
     /* An event that communicates the user's desires about altitude when things are changed. */
