@@ -4,11 +4,6 @@ public class Plane {
     public static final int DEFAULT_ALTITUDE = 7;
 
     /**
-     * Name of the plane.  Usually a single character.
-     */
-    private String name;
-
-    /**
      * Altitude of the plane, in thousands.  Range [0, 9].
      */
     private int altitude;
@@ -33,17 +28,12 @@ public class Plane {
      */
     private int destinationExitNo;
 
-    public Plane(String name, Position position, Direction direction, int destinationExitNo) {
-        this.name = name;
+    public Plane(Position position, Direction direction, int destinationExitNo) {
         this.altitude = DEFAULT_ALTITUDE;
         this.targetAltitude = DEFAULT_ALTITUDE;
         this.position = position;
         this.direction = direction;
         this.destinationExitNo = destinationExitNo;
-    }
-
-    public String getName() {
-        return name;
     }
 
     private int clampAltitude(int altitude) {

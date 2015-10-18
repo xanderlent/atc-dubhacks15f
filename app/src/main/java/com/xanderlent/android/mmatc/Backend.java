@@ -12,9 +12,9 @@ public class Backend {
     public Backend() {
         random = new Random();
         planes = Collections.synchronizedCollection(new ArrayList<Plane>());
-        planes.add(new Plane("Ali", new Position(10, 2), Direction.SOUTH_EAST, 3));
-        planes.add(new Plane("Eco", new Position(4, 4), Direction.SOUTH_EAST, 1));
-        planes.add(new Plane("Dia", new Position(5, 15), Direction.NORTH, 4));
+        planes.add(new Plane(new Position(10, 2), Direction.SOUTH_EAST, 3));
+        planes.add(new Plane(new Position(4, 4), Direction.SOUTH_EAST, 1));
+        planes.add(new Plane(new Position(5, 15), Direction.NORTH, 4));
     }
 
     public synchronized Collection<Plane> getPlanes() {
@@ -38,7 +38,7 @@ public class Backend {
     public synchronized void createPlane(Position where) {
         Direction direction = Direction.NORTH_EAST;
         int destIndex = random.nextInt(6);
-        Plane plane = new Plane("Concorde", where, direction, destIndex);
+        Plane plane = new Plane(where, direction, destIndex);
         planes.add(plane);
     }
 

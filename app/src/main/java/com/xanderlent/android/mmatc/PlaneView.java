@@ -92,11 +92,11 @@ public class PlaneView extends View {
         canvas.drawRect(0, 0, minimalDimension, minimalDimension, fillPaint);
         canvas.drawRect(0, 0, minimalDimension, minimalDimension, strokePaint);
 
-        textPaint.setTextSize(minimalDimension / GRID_HEIGHT);
+        textPaint.setTextSize(minimalDimension / GRID_HEIGHT * 0.7f);
 
         Path path = new Path();
         {
-            float bigness = minimalDimension / GRID_WIDTH / 2;
+            float bigness = minimalDimension / GRID_WIDTH / 2 * 1.3f;
             path.moveTo(0, -bigness);
             path.lineTo(bigness, bigness);
             path.lineTo(0, bigness / 2);
@@ -132,7 +132,7 @@ public class PlaneView extends View {
             //canvas.drawRect(left, top, right, bottom, fillPaint);
             //canvas.drawRect(left, top, right, bottom, strokePaint);
             canvas.restore();
-            canvas.drawText(plane.getName() + plane.getAltitude(), (left + right) / 2, (top + bottom * 3) / 4, textPaint);
+            canvas.drawText(Integer.toString(plane.getAltitude()), (left + right) / 2, (top + bottom * 3) / 4, textPaint);
         }
 
         canvas.restore();
