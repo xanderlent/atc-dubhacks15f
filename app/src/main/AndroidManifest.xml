@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xanderlent.android.mmatc" >
-
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -33,6 +34,7 @@
             android:enabled="true"
             android:exported="false" >
         </service>
+        <service android:name=".BluetoothService" android:enabled="true" android:exported="false"/>
     </application>
 
 </manifest>
