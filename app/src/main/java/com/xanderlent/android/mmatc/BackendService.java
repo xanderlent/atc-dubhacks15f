@@ -185,8 +185,8 @@ public class BackendService extends Service {
     /* Get notified about events due to the user changing direction, and update accordingly. */
     @Subscribe
     public void onPeersChanged(BluetoothService.PeersChangedEvent event) {
-        /* TODO Need to do something about peers? */
-        firePlanesChanged();
+        // forward the event
+        backendBus.post(event);
     }
 
     /* An event that communicates is things have crashed.

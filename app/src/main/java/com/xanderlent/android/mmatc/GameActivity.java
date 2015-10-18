@@ -142,6 +142,11 @@ public class GameActivity extends AppCompatActivity {
                 .show();
     }
 
+    @Subscribe
+    public void onPeersChanged(BluetoothService.PeersChangedEvent event) {
+        planeView.setNeighborNames(event.getNeighborNames());
+    }
+
     private void updatePlaneStatusTexts() {
         if(selectedPlane == null) {
             altStatusText.setText("");
