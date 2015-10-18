@@ -13,6 +13,7 @@ import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 import java.util.Collection;
+import java.util.Random;
 
 public class BackendService extends Service {
     private static final int TICK_RATE = 3000;
@@ -24,9 +25,11 @@ public class BackendService extends Service {
     private boolean alive = true;
     private boolean isBoundToBluetooth = false;
     private Bus bluetoothBus;
+    private Random random;
 
     /* Initialize the BackendService */
     public BackendService() {
+        random = new Random();
         backend = new Backend();
         backendBus = new Bus();
         backendBus.register(this);
@@ -105,6 +108,37 @@ public class BackendService extends Service {
         public Collection<Plane> getPlanes() {
             return planes;
         }
+    }
+
+    /* Get notified about events due to the user changing direction, and update accordingly. */
+    @Subscribe
+    public void onIncomingPlane(BluetoothService.IncomingPlaneEvent event) {
+        Edge inEdge = event.getEdge();
+        Position newPosition = getRandomPositionAlongEdge(inEdge);
+        backend.createPlane(newPosition);
+        firePlanesChanged();
+    }
+
+    private Position getRandomPositionAlongEdge(Edge edge) {
+        switch (edge) {
+            case NORTH:
+                break;
+            case EAST:
+                break;
+            case SOUTH:
+                break;
+            case WEST:
+                break;
+        }
+        return new Position(0,0);
+        /* TODO Get way to give random position along that edge */
+    }
+
+    /* Get notified about events due to the user changing direction, and update accordingly. */
+    @Subscribe
+    public void onPeersChanged(BluetoothService.PeersChangedEvent event) {
+        /* TODO Need to do something about peers? */
+        firePlanesChanged();
     }
 
     /* An event that communicates is things have crashed.

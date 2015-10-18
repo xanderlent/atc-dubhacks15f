@@ -236,8 +236,7 @@ public class BluetoothService extends Service {
         }
     }
 
-    public class PeersChangedEvent {
-    }
+    public class PeersChangedEvent {}
 
     private void notifyPeersChanged() {
         bus.post(producePeersChangedEvent());
