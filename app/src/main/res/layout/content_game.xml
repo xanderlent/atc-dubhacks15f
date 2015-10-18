@@ -18,23 +18,34 @@
         android:id="@+id/planeView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
     <TextView
+        android:text="XY coordinate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/planstatusbar"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/XY_status"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
     </TextView>
+
+    <TextView
+        android:text="Altitude direction status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/alt_status"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"/>
 
     <LinearLayout
         android:weightSum="8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"
+        android:layout_alignParentBottom="true"
 
-        android:layout_above="@+id/planstatusbar"
         android:layout_alignParentLeft="true">
 
         <Button
