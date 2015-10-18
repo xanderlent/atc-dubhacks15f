@@ -67,7 +67,12 @@ public class BackendService extends Service {
             alive = false;
             return;
         }
+        // fireOutgoingPlane();
         firePlanesChanged();
+    }
+
+    public void firePlanesChanged(Edge edge) {
+        bluetoothBus.post(new BluetoothService.OutgoingPlaneEvent(edge));
     }
 
     /* Get notified about events due to the user changing altitude, and update accordingly. */
