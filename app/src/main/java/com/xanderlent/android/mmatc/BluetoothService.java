@@ -152,7 +152,7 @@ public class BluetoothService extends Service {
                 map.put(peer.getEdge(), peer.getName());
             }
         }
-        return map;
+        return Collections.unmodifiableMap(map);
     }
 
     private Edge findFreeEdge() {
