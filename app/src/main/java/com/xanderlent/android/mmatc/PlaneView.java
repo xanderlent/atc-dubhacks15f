@@ -146,18 +146,27 @@ public class PlaneView extends View {
             float touchY = event.getY();
             touchX -= (getWidth() - minimalDimension) / 2;
             touchY -= (getHeight() - minimalDimension) / 2;
-            int gridX = (int)(touchX / minimalDimension * GRID_WIDTH);
-            int gridY = (int)(touchY / minimalDimension * GRID_HEIGHT);
-            Position position = new Position(gridX, gridY);
-            Plane selectedPlane = null;
+            Plane nearestPlane = null;
+            float nearestDistanceSq = Float.POSITIVE_INFINITY;
+            float stepSize = minimalDimension / GRID_WIDTH;
             for(Plane plane : planes) {
-                if(plane.getPosition().equals(position)) {
-                    selectedPlane = plane;
+                Position position = plane.getPosition();
+                float planeVPX = plane.getPosition().getX() * minimalDimension / GRID_WIDTH;
+                float planeVPY = plane.getPosition().getY() * minimalDimension / GRID_HEIGHT;
+                float deltaX = planeVPX - touchX;
+                float deltaY = planeVPY - touchY;
+                float distanceSq = deltaX * deltaX + deltaY * deltaY;
+                if(distanceSq < nearestDistanceSq) {
+                    nearestPlane = plane;
+                    nearestDistanceSq = distanceSq;
                 }
             }
-            setSelectedPlane(selectedPlane);
+            if(nearestDistanceSq > stepSize * stepSize * 6) {
+                nearestPlane = null;
+            }
+            setSelectedPlane(nearestPlane);
             if(selectionChangeCallback != null) {
-                selectionChangeCallback.onSelectionChanged(this, selectedPlane);
+                selectionChangeCallback.onSelectionChanged(this, nearestPlane);
             }
             return true;
         }
