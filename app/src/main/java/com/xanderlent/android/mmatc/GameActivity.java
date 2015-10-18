@@ -1,11 +1,15 @@
 package com.xanderlent.android.mmatc;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import java.util.Arrays;
+
 public class GameActivity extends AppCompatActivity {
+    private PlaneView planeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +26,19 @@ public class GameActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
-        try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }catch (NullPointerException e){
-            Log.e("Error", "Null pointer exception");
+        {
+            ActionBar actionBar = getSupportActionBar();
+            if(actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         }
        // getActionBar().setDisplayHomeAsUpEnabled(true);
+        planeView = (PlaneView)findViewById(R.id.planeView);
+        planeView.setPlanes(Arrays.asList(
+                new Plane("Ali", new Position(10, 2), Direction.SOUTH_EAST, 3),
+                new Plane("Eco", new Position(4, 4), Direction.SOUTH_EAST, 1),
+                new Plane("Dia", new Position(5, 15), Direction.NORTH, 4)
+        ));
     }
 
 }

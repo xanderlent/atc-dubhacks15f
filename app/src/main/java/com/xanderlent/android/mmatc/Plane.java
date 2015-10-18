@@ -41,6 +41,16 @@ public class Plane {
         this.destinationExitNo = destinationExitNo;
     }
 
+    private int clampAltitude(int altitude) {
+        if(altitude < 0) {
+            altitude = 0;
+        }
+        if(altitude > 9) {
+            altitude = 9;
+        }
+        return altitude;
+    }
+
     public int getAltitude() {
         return altitude;
     }
@@ -48,9 +58,7 @@ public class Plane {
     public int getTargetAltitude() { return targetAltitude; }
 
     public void setAltitudeImmediately(int altitude, boolean andTarget) {
-        if(altitude < 0 || altitude > 9) {
-            throw new IllegalArgumentException("altitude out of bounds");
-        }
+        altitude = clampAltitude(altitude);
         this.altitude = altitude;
         if(andTarget) {
             targetAltitude = altitude;
@@ -58,9 +66,7 @@ public class Plane {
     }
 
     public void setTargetAltitude(int newTargetAltitude) {
-        if(newTargetAltitude < 0 || newTargetAltitude > 9) {
-            throw new IllegalArgumentException("target altitude out of bounds");
-        }
+        newTargetAltitude = clampAltitude(newTargetAltitude);
         targetAltitude = newTargetAltitude;
     }
 
