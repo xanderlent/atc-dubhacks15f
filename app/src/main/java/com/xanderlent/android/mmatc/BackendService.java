@@ -52,6 +52,9 @@ public class BackendService extends Service {
     /* Process one tick (step) of the model/backend. */
     private void tick() {
         backend.tick();
+        if (backend.getIsCrashed()) {
+            firePlaneCrashed();
+        }
         firePlanesChanged();
     }
 
