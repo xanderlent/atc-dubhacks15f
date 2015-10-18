@@ -14,6 +14,11 @@ public class Plane {
     private int altitude;
 
     /**
+     * Altitude that the plane wants to target, in thousands.  Same range as altitude.
+     */
+    private int targetAltitude;
+
+    /**
      * Current position of the plane.
      */
     private Position position;
@@ -40,11 +45,23 @@ public class Plane {
         return altitude;
     }
 
-    public void setAltitude(int altitude) {
+    public int getTargetAltitude() { return targetAltitude; }
+
+    public void setAltitudeImmediately(int altitude, boolean andTarget) {
         if(altitude < 0 || altitude > 9) {
             throw new IllegalArgumentException("altitude out of bounds");
         }
         this.altitude = altitude;
+        if(andTarget) {
+            targetAltitude = altitude;
+        }
+    }
+
+    public void setTargetAltitude(int newTargetAltitude) {
+        if(newTargetAltitude < 0 || newTargetAltitude > 9) {
+            throw new IllegalArgumentException("target altitude out of bounds");
+        }
+        targetAltitude = newTargetAltitude;
     }
 
     public Position getPosition() {
