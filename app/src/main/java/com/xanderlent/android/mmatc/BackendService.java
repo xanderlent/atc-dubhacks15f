@@ -37,15 +37,20 @@ public class BackendService extends Service {
         // ^ Register so as to subscribe to user changed plane event notifications
         handler = new Handler();
         handler.postDelayed(tickRunnable, TICK_RATE);
-        // Bind to BluetoothService
-        Intent intent = new Intent(this, BluetoothService.class);
-        bindService(intent, bluetoothConnection, Context.BIND_AUTO_CREATE);
     }
 
     /* Give the component binding this service a reference to the Binder. */
     @Override
     public IBinder onBind(Intent intent) {
         return backendBinder;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        // Bind to BluetoothService
+        Intent intent = new Intent(this, BluetoothService.class);
+        bindService(intent, bluetoothConnection, Context.BIND_AUTO_CREATE);
     }
 
     /**
