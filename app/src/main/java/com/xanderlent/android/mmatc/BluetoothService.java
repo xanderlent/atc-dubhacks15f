@@ -236,7 +236,17 @@ public class BluetoothService extends Service {
         }
     }
 
-    public static class PeersChangedEvent {}
+    public static class PeersChangedEvent {
+        private Map<Edge, String> neighborNames;
+
+        protected PeersChangedEvent(Map<Edge, String> neighborNames) {
+            this.neighborNames = neighborNames;
+        }
+
+        public Map<Edge, String> getNeighborNames() {
+            return neighborNames;
+        }
+    }
 
     private void notifyPeersChanged() {
         bus.post(producePeersChangedEvent());
@@ -244,7 +254,7 @@ public class BluetoothService extends Service {
 
     @Produce
     public PeersChangedEvent producePeersChangedEvent() {
-        return new PeersChangedEvent();
+        return new PeersChangedEvent(getNeighborNames());
     }
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
