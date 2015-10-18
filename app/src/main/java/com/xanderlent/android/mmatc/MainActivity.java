@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            //TODO make intent and connect to the gaming activity
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "This will launch the game", Snackbar.LENGTH_LONG)
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 //        button_start.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                //TODO make intent and connect to the gaming activity
+//
 //            }
 //        });
     }
