@@ -6,6 +6,9 @@ import android.os.Binder;
 import android.os.IBinder;
 
 import com.squareup.otto.Bus;
+import com.squareup.otto.Produce;
+
+import java.util.Collection;
 
 public class BackendService extends Service {
     private final IBinder backendBinder;
@@ -15,9 +18,9 @@ public class BackendService extends Service {
     public BackendService() {
         backendBinder = new BackendBinder();
         backendBus = new Bus();
+        backendBus.register(this);
         backend = new Backend();
-        //backendBus.post(/* planesChanged */ null); // TODO Make Published message
-        //backendBus.post(/* neighborsChanged*/ null); // TODO Make Published message
+        // TODO Create Timer to trigger tick()
     }
 
     @Override
@@ -32,6 +35,28 @@ public class BackendService extends Service {
     public class BackendBinder extends Binder {
         Bus getBackendBus() {
             return backendBus;
+        }
+    }
+
+    private void tick() {
+        backend.tick();
+        backendBus.post(new PlanesChangedEvent(backend.getPlanes()));
+    }
+
+    @Produce
+    public PlanesChangedEvent producePlanesChangedEvent() {
+        return new PlanesChangedEvent(backend.getPlanes());
+    }
+
+    public class PlanesChangedEvent {
+        private Collection<Plane> planes;
+
+        public PlanesChangedEvent(Collection<Plane> planes) {
+            this.planes = planes;
+        }
+
+        public Collection<Plane> getPlanes() {
+            return planes;
         }
     }
 }

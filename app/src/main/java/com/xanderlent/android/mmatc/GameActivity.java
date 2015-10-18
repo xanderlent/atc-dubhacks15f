@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
+import com.squareup.otto.Produce;
+import com.squareup.otto.Subscribe;
 
 import java.util.Arrays;
 
@@ -44,11 +46,11 @@ public class GameActivity extends AppCompatActivity {
         }
        // getActionBar().setDisplayHomeAsUpEnabled(true);
         planeView = (PlaneView)findViewById(R.id.planeView);
-        planeView.setPlanes(Arrays.asList(
-                new Plane("Ali", new Position(10, 2), Direction.SOUTH_EAST, 3),
-                new Plane("Eco", new Position(4, 4), Direction.SOUTH_EAST, 1),
-                new Plane("Dia", new Position(5, 15), Direction.NORTH, 4)
-        ));
+//        planeView.setPlanes(Arrays.asList(
+//                new Plane("Ali", new Position(10, 2), Direction.SOUTH_EAST, 3),
+//                new Plane("Eco", new Position(4, 4), Direction.SOUTH_EAST, 1),
+//                new Plane("Dia", new Position(5, 15), Direction.NORTH, 4)
+//        ));
         planeView.setSelectionChangeCallback(new PlaneView.SelectionChangeCallback() {
             @Override
             public void onSelectionChanged(PlaneView planeView, Plane selectedPlane) {
@@ -86,12 +88,55 @@ public class GameActivity extends AppCompatActivity {
             // and get the bus from the BackendService instance.
             BackendService.BackendBinder binder = (BackendService.BackendBinder) service;
             backendBus = binder.getBackendBus();
+            backendBus.register(GameActivity.this);
             isBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
+            backendBus.unregister(GameActivity.this);
             isBound = false;
         }
     };
+
+    @Subscribe
+    public void onPlanesChanged(BackendService.PlanesChangedEvent event) {
+        planeView.setPlanes(event.getPlanes());
+    }
+
+    public class UserChangedDirectionEvent {
+        private Plane plane;
+        private Direction direction;
+
+        public UserChangedDirectionEvent(Plane plane, Direction direction) {
+            this.plane = plane;
+            this.direction = direction;
+        }
+
+        public Plane getPlane() {
+            return plane;
+        }
+
+        public Direction getDirection() {
+            return direction;
+        }
+    }
+
+    public class UserChangedAltitudeEvent {
+        private Plane plane;
+        private int targetAltitude;
+
+        public UserChangedAltitudeEvent(Plane plane, int targetAltitude) {
+            this.plane = plane;
+            this.targetAltitude = targetAltitude;
+        }
+
+        public Plane getPlane() {
+            return plane;
+        }
+
+        public int getTargetAltitude() {
+            return targetAltitude;
+        }
+    }
 }
