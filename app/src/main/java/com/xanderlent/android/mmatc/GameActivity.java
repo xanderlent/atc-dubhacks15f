@@ -31,7 +31,7 @@ public class GameActivity extends AppCompatActivity {
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        selectedPlane = null;
+        selectedPlane = null; // Generally, we don't select a plane.
         planeView = (PlaneView)findViewById(R.id.planeView);
         planeView.setSelectionChangeCallback(new PlaneView.SelectionChangeCallback() {
             @Override
@@ -63,6 +63,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /* Handle the various cases for the four actions' buttons. */
     public void upClicked(View view) {
         Snackbar.make(planeView, "UP Clicked!", Snackbar.LENGTH_SHORT).show();
         if (selectedPlane != null) {
@@ -125,11 +126,13 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    /* Get notified about events due to the model changing its Planes, and update accordingly. */
     @Subscribe
     public void onPlanesChanged(BackendService.PlanesChangedEvent event) {
         planeView.setPlanes(event.getPlanes());
     }
 
+    /* An event that communicates the user's desires about altitude when things are changed. */
     public class UserChangedAltitudeEvent {
         private Plane plane;
         private int increment;
@@ -148,6 +151,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /* An event that communicates the user's desires about direction when things are changed. */
     public class UserChangedDirectionEvent {
         private Plane plane;
         private Direction direction;

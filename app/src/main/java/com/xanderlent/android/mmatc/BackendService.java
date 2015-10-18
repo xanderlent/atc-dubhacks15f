@@ -13,9 +13,10 @@ import java.util.Collection;
 
 public class BackendService extends Service {
     private final IBinder backendBinder;
-    private Bus backendBus;
+    private static Bus backendBus; // The Bus is a singleton, according to Otto docs...
     private Backend backend;
 
+    /* Initialize the BackendService */
     public BackendService() {
         backend = new Backend();
         backendBus = new Bus();
@@ -25,14 +26,16 @@ public class BackendService extends Service {
         // TODO Create Timer/AlarmManager to trigger tick()
     }
 
+    /* Give the component binding this service a reference to the BackendBinder. */
     @Override
     public IBinder onBind(Intent intent) {
         return backendBinder;
     }
 
     /**
-     * Class used for the client Binder.  Because we know this service always
-     * runs in the same process as its clients, we don't need to deal with IPC.
+     * The Binder that the client will use to bind to this service. "Because we know this service
+     * always runs in the same process as its clients, we don't need to deal with IPC."
+     * (In quotes: verbatim from Android example code.)
      */
     public class BackendBinder extends Binder {
         Bus getBackendBus() {
@@ -40,26 +43,32 @@ public class BackendService extends Service {
         }
     }
 
+    /* Process one tick (step) of the model/backend. */
     private void tick() {
-        backend.tick();
+        backend.tick(); // Step the backend
         backendBus.post(new PlanesChangedEvent(backend.getPlanes()));
+        // ^ Create a message notifying clients that the Planes have changed.
     }
 
+    /* Get notified about events due to the user changing altitude, and update accordingly. */
     @Subscribe
     public void userChangedAltitude(GameActivity.UserChangedAltitudeEvent event) {
         backend.changeAltitude(event.getPlane(), event.getIncrement());
     }
 
+    /* Get notified about events due to the user changing direction, and update accordingly. */
     @Subscribe
     public void userChangedDirection(GameActivity.UserChangedDirectionEvent event) {
         backend.turnPlane(event.getPlane(), event.getDirection());
     }
 
+    /* Automatically create a PlanesChangedEvent when said event is subscribed to. */
     @Produce
     public PlanesChangedEvent producePlanesChangedEvent() {
         return new PlanesChangedEvent(backend.getPlanes());
     }
 
+    /* An event that communicates the model's/backend's Planes when things change. */
     public class PlanesChangedEvent {
         private Collection<Plane> planes;
 
