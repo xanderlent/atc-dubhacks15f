@@ -131,6 +131,10 @@ public class BluetoothService extends Service {
     }
 
     public void start(String name) {
+        if(adapter == null) {
+            // it's useless
+            return;
+        }
         myName = name;
         synchronizeServerStatus();
         registerReceiver(broadcastReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
@@ -173,6 +177,10 @@ public class BluetoothService extends Service {
     }
 
     private void synchronizeServerStatus() {
+        if(adapter == null) {
+            // not much we can do
+            return;
+        }
         BluetoothServerSocket serverSocket = this.serverSocket;
         boolean serverIsRunning = serverSocket != null;
         boolean serverShouldBeRunning = !wantShutdown && findFreeEdge() != null;
