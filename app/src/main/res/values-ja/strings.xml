@@ -4,7 +4,6 @@
     <string name="action_settings">セッチング</string>
     <string name="start">初めて</string>
     <string name="title_activity_game">ゲーム</string>
-    <string name="title_activity_starting">初めている</string>
     <string name="user_name_hint">ここにユーザ名を書いてください</string>
     <string name="user_name_label">ユーザ名：</string>
     <string name="down_button_label">下</string>
