@@ -50,7 +50,7 @@ public class BackendService extends Service {
         super.onCreate();
         // Bind to BluetoothService
         Intent intent = new Intent(this, BluetoothService.class);
-        bindService(intent, bluetoothConnection, Context.BIND_AUTO_CREATE);
+        //bindService(intent, bluetoothConnection, Context.BIND_AUTO_CREATE);
     }
 
     /**
