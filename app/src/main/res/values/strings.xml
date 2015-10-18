@@ -6,4 +6,8 @@
     <string name="title_activity_game">GameActivity</string>
     <string name="user_name_label">User name:</string>
     <string name="user_name_hint">Please enter your user name here</string>
+    <string name="down_button_label">DOWN</string>
+    <string name="up_button_label">UP</string>
+    <string name="left_button_label">LEFT</string>
+    <string name="right_button_label">RIGHT</string>
 </resources>

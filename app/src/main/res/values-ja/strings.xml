@@ -7,4 +7,8 @@
     <string name="title_activity_starting">初めている</string>
     <string name="user_name_hint">ここにユーザ名を書いてください</string>
     <string name="user_name_label">ユーザ名：</string>
+    <string name="down_button_label">下</string>
+    <string name="left_button_label">左</string>
+    <string name="right_button_label">右</string>
+    <string name="up_button_label">上</string>
 </resources>
