@@ -53,7 +53,7 @@ public class BackendService extends Service {
     private void tick() {
         backend.tick();
         if (backend.getIsCrashed()) {
-            firePlaneCrashed();
+            firePlanesCrashed();
         }
         firePlanesChanged();
     }
@@ -75,6 +75,10 @@ public class BackendService extends Service {
         backendBus.post(producePlanesChangedEvent());
     }
 
+    private void firePlanesCrashed() {
+        backendBus.post(new PlanesCrashedEvent());
+    }
+
     /* Automatically create a PlanesChangedEvent when said event is subscribed to. */
     @Produce
     public PlanesChangedEvent producePlanesChangedEvent() {
@@ -93,6 +97,10 @@ public class BackendService extends Service {
             return planes;
         }
     }
+
+    /* An event that communicates is things have crashed.
+    *  TODO: Which planes crashed? */
+    public class PlanesCrashedEvent {}
 
     private Runnable tickRunnable = new Runnable() {
         @Override

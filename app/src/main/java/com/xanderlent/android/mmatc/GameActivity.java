@@ -132,6 +132,12 @@ public class GameActivity extends AppCompatActivity {
         updatePlaneStatusTexts();
     }
 
+    /* Get notified about events due to the model changing its Planes, and update accordingly. */
+    @Subscribe
+    public void onPlanesCrashed(BackendService.PlanesCrashedEvent event) {
+        // Indicate things have crashed.
+    }
+
     private void updatePlaneStatusTexts() {
         if(selectedPlane == null) {
             altStatusText.setText("");
