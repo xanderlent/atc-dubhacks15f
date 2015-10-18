@@ -14,7 +14,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.squareup.otto.Bus;
+import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
+
+import java.util.Arrays;
 
 public class GameActivity extends AppCompatActivity {
     private PlaneView planeView;
@@ -27,15 +30,6 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
         {
             ActionBar actionBar = getSupportActionBar();
             if(actionBar != null) {
@@ -75,11 +69,6 @@ public class GameActivity extends AppCompatActivity {
 
        // getActionBar().setDisplayHomeAsUpEnabled(true);
         planeView = (PlaneView)findViewById(R.id.planeView);
-//        planeView.setPlanes(Arrays.asList(
-//                new Plane("Ali", new Position(10, 2), Direction.SOUTH_EAST, 3),
-//                new Plane("Eco", new Position(4, 4), Direction.SOUTH_EAST, 1),
-//                new Plane("Dia", new Position(5, 15), Direction.NORTH, 4)
-//        ));
         planeView.setSelectionChangeCallback(new PlaneView.SelectionChangeCallback() {
             @Override
             public void onSelectionChanged(PlaneView planeView, Plane selectedPlane) {
