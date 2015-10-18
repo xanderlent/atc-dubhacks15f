@@ -41,6 +41,10 @@ public class Plane {
         this.destinationExitNo = destinationExitNo;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private int clampAltitude(int altitude) {
         if(altitude < 0) {
             altitude = 0;

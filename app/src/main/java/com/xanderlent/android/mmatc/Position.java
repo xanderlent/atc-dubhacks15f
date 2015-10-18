@@ -28,4 +28,13 @@ public class Position {
     public Position towardsDirection(Direction direction) {
         return new Position(x + direction.getDeltaX(), y + direction.getDeltaY());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Position)) {
+            return false;
+        }
+        Position other = (Position)o;
+        return x == other.x && y == other.y;
+    }
 }
