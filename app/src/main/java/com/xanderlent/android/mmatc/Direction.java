@@ -10,6 +10,34 @@ public enum Direction {
     WEST,
     NORTH_WEST;
 
+    public Direction left() {
+        switch(this) {
+            case NORTH: return NORTH_WEST;
+            case NORTH_EAST: return NORTH;
+            case EAST: return NORTH_EAST;
+            case SOUTH_EAST: return EAST;
+            case SOUTH: return SOUTH_EAST;
+            case SOUTH_WEST: return SOUTH;
+            case WEST: return SOUTH_WEST;
+            case NORTH_WEST: return WEST;
+        }
+        throw new AssertionError("unhandled case in Direction.left");
+    }
+
+    public Direction right() {
+        switch(this) {
+            case NORTH: return NORTH_EAST;
+            case NORTH_EAST: return EAST;
+            case EAST: return SOUTH_EAST;
+            case SOUTH_EAST: return SOUTH;
+            case SOUTH: return SOUTH_WEST;
+            case SOUTH_WEST: return WEST;
+            case WEST: return NORTH_WEST;
+            case NORTH_WEST: return NORTH;
+        }
+        throw new AssertionError("unhandled case in Direction.right");
+    }
+
     /**
      * @return The change in the X coördinate when going in this direction.
      */
