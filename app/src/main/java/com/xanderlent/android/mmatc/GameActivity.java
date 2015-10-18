@@ -1,15 +1,24 @@
 package com.xanderlent.android.mmatc;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.squareup.otto.Bus;
+
 import java.util.Arrays;
 
 public class GameActivity extends AppCompatActivity {
     private PlaneView planeView;
+    private Bus backendBus;
+    boolean isBound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,4 +50,40 @@ public class GameActivity extends AppCompatActivity {
         ));
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Bind to LocalService
+        Intent intent = new Intent(this, BackendService.class);
+        bindService(intent, backendConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Unbind from the service
+        if (isBound) {
+            unbindService(backendConnection);
+            isBound = false;
+        }
+    }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection backendConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to BackendService, cast the IBinder
+            // and get the bus from the BackendService instance.
+            BackendService.BackendBinder binder = (BackendService.BackendBinder) service;
+            backendBus = binder.getBackendBus();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            isBound = false;
+        }
+    };
 }

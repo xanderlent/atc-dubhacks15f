@@ -27,6 +27,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.xanderlent.android.mmatc.MainActivity" />
         </activity>
+
+        <service
+            android:name=".BackendService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>
