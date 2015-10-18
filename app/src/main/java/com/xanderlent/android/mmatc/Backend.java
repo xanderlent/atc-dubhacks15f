@@ -10,7 +10,6 @@ public class Backend {
     public static final int SIZE = 20;
     private Random random;
     private Collection<Plane> planes;
-    private boolean isCrashed = false;
 
     public Backend() {
         random = new Random();
@@ -53,22 +52,23 @@ public class Backend {
         }
     }
 
-    public synchronized void checkIfCrashed(){
-        for(Plane plane : planes){
-            if(plane.getAltitude() == 0 || plane.getPosition().getX() > 20 || plane.getPosition().getX() < 0 ||plane.getPosition().getY() > 20 || plane.getPosition().getY() < 0 ){
+    public synchronized boolean checkIfCrashed() {
+        boolean isCrashed = false;
+        for(Plane plane : planes) {
+            if(plane.getAltitude() == 0 || plane.getPosition().getX() >= SIZE
+                    || plane.getPosition().getX() < 0 || plane.getPosition().getY() >= SIZE
+                    || plane.getPosition().getY() < 0) {
                 isCrashed = true;
                 break;
             }
-            for(Plane p2 : planes){
-                if(plane != p2 && plane.getPosition() == p2.getPosition()){
+            for(Plane p2 : planes) {
+                if(plane != p2 && plane.getPosition().equals(p2.getPosition())
+                        && plane.getAltitude() == p2.getAltitude()) {
                     isCrashed = true;
                     break;
                 }
             }
         }
-    }
-
-    public boolean getIsCrashed() {
         return isCrashed;
     }
 }

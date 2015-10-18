@@ -135,9 +135,11 @@ public class GameActivity extends AppCompatActivity {
     /* Get notified about events due to the model changing its Planes, and update accordingly. */
     @Subscribe
     public void onPlanesCrashed(BackendService.PlanesCrashedEvent event) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
-        builder.setMessage("YOU LOSE").setTitle("GAME OVER");
-        AlertDialog dialog = builder.create();
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.game_over_title))
+                .setMessage(getString(R.string.game_over_message))
+                .create()
+                .show();
     }
 
     private void updatePlaneStatusTexts() {

@@ -13,4 +13,6 @@
     <string name="right_button_label">右</string>
     <string name="up_button_label">上</string>
     <string name="alt_status_text">旅先：Ｅ%d</string>
+    <string name="game_over_title">ゲームが終わりました</string>
+    <string name="game_over_message">負けました。今度、頑張ってください。</string>
 </resources>
