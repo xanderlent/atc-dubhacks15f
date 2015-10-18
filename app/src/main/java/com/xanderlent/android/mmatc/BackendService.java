@@ -7,6 +7,7 @@ import android.os.IBinder;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
+import com.squareup.otto.Subscribe;
 
 import java.util.Collection;
 
@@ -16,10 +17,11 @@ public class BackendService extends Service {
     private Backend backend;
 
     public BackendService() {
-        backendBinder = new BackendBinder();
+        backend = new Backend();
         backendBus = new Bus();
         backendBus.register(this);
-        backend = new Backend();
+        backendBinder = new BackendBinder();
+        // ^ Register so as to subscribe to user changed plane event notifications
         // TODO Create Timer/AlarmManager to trigger tick()
     }
 
@@ -41,6 +43,16 @@ public class BackendService extends Service {
     private void tick() {
         backend.tick();
         backendBus.post(new PlanesChangedEvent(backend.getPlanes()));
+    }
+
+    @Subscribe
+    public void userChangedAltitude(GameActivity.UserChangedAltitudeEvent event) {
+        backend.changeAltitude(event.getPlane(), event.getIncrement());
+    }
+
+    @Subscribe
+    public void userChangedDirection(GameActivity.UserChangedDirectionEvent event) {
+        backend.turnPlane(event.getPlane(), event.getDirection());
     }
 
     @Produce
