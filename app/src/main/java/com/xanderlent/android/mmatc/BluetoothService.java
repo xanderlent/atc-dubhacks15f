@@ -198,7 +198,7 @@ public class BluetoothService extends Service {
         synchronizeServerStatus();
     }
 
-    public class IncomingPlaneEvent {
+    public static class IncomingPlaneEvent {
         private Edge edge;
 
         public IncomingPlaneEvent(Edge edge) {
@@ -214,7 +214,7 @@ public class BluetoothService extends Service {
         bus.post(new IncomingPlaneEvent(peer.getEdge()));
     }
 
-    public class OutgoingPlaneEvent {
+    public static class OutgoingPlaneEvent {
         private Edge edge;
 
         public OutgoingPlaneEvent(Edge edge) {
@@ -236,7 +236,7 @@ public class BluetoothService extends Service {
         }
     }
 
-    public class PeersChangedEvent {}
+    public static class PeersChangedEvent {}
 
     private void notifyPeersChanged() {
         bus.post(producePeersChangedEvent());

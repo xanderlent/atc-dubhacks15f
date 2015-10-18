@@ -98,7 +98,7 @@ public class BackendService extends Service {
     }
 
     /* An event that communicates the model's/backend's Planes when things change. */
-    public class PlanesChangedEvent {
+    public static class PlanesChangedEvent {
         private Collection<Plane> planes;
 
         public PlanesChangedEvent(Collection<Plane> planes) {
@@ -143,7 +143,7 @@ public class BackendService extends Service {
 
     /* An event that communicates is things have crashed.
     *  TODO: Which planes crashed? */
-    public class PlanesCrashedEvent {}
+    public static class PlanesCrashedEvent {}
 
     private Runnable tickRunnable = new Runnable() {
         @Override
