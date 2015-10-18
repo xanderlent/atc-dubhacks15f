@@ -70,7 +70,7 @@ public class GameActivity extends AppCompatActivity {
     public void upClicked(View view) {
         if (selectedPlane != null) {
             UserChangedAltitudeEvent event;
-            int newAltitude = selectedPlane.getAltitude() + 1;
+            int newAltitude = selectedPlane.getTargetAltitude() + 1;
             event = new UserChangedAltitudeEvent(selectedPlane, newAltitude);
             backendBus.post(event);
         }
@@ -79,7 +79,7 @@ public class GameActivity extends AppCompatActivity {
     public void downClicked(View view) {
         if (selectedPlane != null) {
             UserChangedAltitudeEvent event;
-            int newAltitude = selectedPlane.getAltitude() - 1;
+            int newAltitude = selectedPlane.getTargetAltitude() - 1;
             event = new UserChangedAltitudeEvent(selectedPlane, newAltitude);
             backendBus.post(event);
         }
@@ -143,19 +143,19 @@ public class GameActivity extends AppCompatActivity {
     /* An event that communicates the user's desires about altitude when things are changed. */
     public class UserChangedAltitudeEvent {
         private Plane plane;
-        private int increment;
+        private int newAltitude;
 
-        public UserChangedAltitudeEvent(Plane plane, int increment) {
+        public UserChangedAltitudeEvent(Plane plane, int newAltitude) {
             this.plane = plane;
-            this.increment = increment;
+            this.newAltitude = newAltitude;
         }
 
         public Plane getPlane() {
             return plane;
         }
 
-        public int getIncrement() {
-            return increment;
+        public int getNewAltitude() {
+            return newAltitude;
         }
     }
 

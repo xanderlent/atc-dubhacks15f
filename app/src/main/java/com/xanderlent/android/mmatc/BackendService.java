@@ -58,7 +58,7 @@ public class BackendService extends Service {
     /* Get notified about events due to the user changing altitude, and update accordingly. */
     @Subscribe
     public void userChangedAltitude(GameActivity.UserChangedAltitudeEvent event) {
-        backend.changeAltitude(event.getPlane(), event.getIncrement());
+        backend.changeAltitude(event.getPlane(), event.getNewAltitude());
     }
 
     /* Get notified about events due to the user changing direction, and update accordingly. */
