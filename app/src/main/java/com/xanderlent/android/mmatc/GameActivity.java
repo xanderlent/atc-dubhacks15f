@@ -30,43 +30,10 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        {
-            ActionBar actionBar = getSupportActionBar();
-            if(actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        //TODO: BUTTONS
-        Button up = (Button) findViewById(R.id.up);
-        up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        Button down = (Button) findViewById(R.id.down);
-        down.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        Button left = (Button) findViewById(R.id.left);
-        left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        Button right = (Button) findViewById(R.id.right);
-        right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
        // getActionBar().setDisplayHomeAsUpEnabled(true);
         planeView = (PlaneView)findViewById(R.id.planeView);
         planeView.setSelectionChangeCallback(new PlaneView.SelectionChangeCallback() {
@@ -94,6 +61,24 @@ public class GameActivity extends AppCompatActivity {
             unbindService(backendConnection);
             isBound = false;
         }
+    }
+
+    //TODO: BUTTONS
+    public void upClicked(View view) {
+        Snackbar.make(planeView, "UP Clicked!", Snackbar.LENGTH_SHORT).show();
+        // NOP
+    }
+    public void downClicked(View view) {
+        Snackbar.make(planeView, "DOWN Clicked!", Snackbar.LENGTH_SHORT).show();
+        // NOP
+    }
+    public void rightClicked(View view) {
+        Snackbar.make(planeView, "RIGHT Clicked!", Snackbar.LENGTH_SHORT).show();
+        // NOP
+    }
+    public void leftClicked(View view) {
+        Snackbar.make(planeView, "LEFT Clicked!", Snackbar.LENGTH_SHORT).show();
+        // NOP
     }
 
     /** Defines callbacks for service binding, passed to bindService() */
