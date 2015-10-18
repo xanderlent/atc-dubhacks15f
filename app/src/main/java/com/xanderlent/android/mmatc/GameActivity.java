@@ -49,7 +49,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        // Bind to LocalService
+        // Bind to BackendService
         Intent intent = new Intent(this, BackendService.class);
         bindService(intent, backendConnection, Context.BIND_AUTO_CREATE);
     }
@@ -112,8 +112,8 @@ public class GameActivity extends AppCompatActivity {
                                        IBinder service) {
             // We've bound to BackendService, cast the IBinder
             // and get the bus from the BackendService instance.
-            BackendService.BackendBinder binder = (BackendService.BackendBinder) service;
-            backendBus = binder.getBackendBus();
+            BackendService.Binder binder = (BackendService.Binder) service;
+            backendBus = binder.getBus();
             backendBus.register(GameActivity.this);
             isBound = true;
         }

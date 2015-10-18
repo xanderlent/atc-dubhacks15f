@@ -1,8 +1,10 @@
 package com.xanderlent.android.mmatc;
 
 import android.app.Service;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Binder;
+import android.content.ServiceConnection;
 import android.os.Handler;
 import android.os.IBinder;
 
@@ -20,19 +22,24 @@ public class BackendService extends Service {
     private Backend backend;
     private Handler handler;
     private boolean alive = true;
+    private boolean isBoundToBluetooth = false;
+    private Bus bluetoothBus;
 
     /* Initialize the BackendService */
     public BackendService() {
         backend = new Backend();
         backendBus = new Bus();
         backendBus.register(this);
-        backendBinder = new BackendBinder();
+        backendBinder = new Binder();
         // ^ Register so as to subscribe to user changed plane event notifications
         handler = new Handler();
         handler.postDelayed(tickRunnable, TICK_RATE);
+        // Bind to BluetoothService
+        Intent intent = new Intent(this, BluetoothService.class);
+        bindService(intent, bluetoothConnection, Context.BIND_AUTO_CREATE);
     }
 
-    /* Give the component binding this service a reference to the BackendBinder. */
+    /* Give the component binding this service a reference to the Binder. */
     @Override
     public IBinder onBind(Intent intent) {
         return backendBinder;
@@ -43,8 +50,8 @@ public class BackendService extends Service {
      * always runs in the same process as its clients, we don't need to deal with IPC."
      * (In quotes: verbatim from Android example code.)
      */
-    public class BackendBinder extends Binder {
-        Bus getBackendBus() {
+    public class Binder extends android.os.Binder {
+        Bus getBus() {
             return backendBus;
         }
     }
@@ -115,6 +122,31 @@ public class BackendService extends Service {
     @Override
     public void onDestroy() {
         alive = false;
+        if (isBoundToBluetooth) {
+            unbindService(bluetoothConnection);
+            isBoundToBluetooth = false;
+        }
         super.onDestroy();
     }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection bluetoothConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to BackendService, cast the IBinder
+            // and get the bus from the BackendService instance.
+            BluetoothService.Binder binder = (BluetoothService.Binder) service;
+            bluetoothBus = binder.getBus();
+            bluetoothBus.register(BackendService.this);
+            isBoundToBluetooth = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            bluetoothBus.unregister(BackendService.this);
+            isBoundToBluetooth = false;
+        }
+    };
 }
