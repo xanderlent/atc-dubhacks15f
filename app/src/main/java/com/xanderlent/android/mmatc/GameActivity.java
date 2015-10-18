@@ -69,36 +69,36 @@ public class GameActivity extends AppCompatActivity {
     /* Handle the various cases for the four actions' buttons. */
     public void upClicked(View view) {
         if (selectedPlane != null) {
-            UserChangedAltitudeEvent event;
+            BackendService.UserChangedAltitudeEvent event;
             int newAltitude = selectedPlane.getTargetAltitude() + 1;
-            event = new UserChangedAltitudeEvent(selectedPlane, newAltitude);
+            event = new BackendService.UserChangedAltitudeEvent(selectedPlane, newAltitude);
             backendBus.post(event);
         }
         // NOP
     }
     public void downClicked(View view) {
         if (selectedPlane != null) {
-            UserChangedAltitudeEvent event;
+            BackendService.UserChangedAltitudeEvent event;
             int newAltitude = selectedPlane.getTargetAltitude() - 1;
-            event = new UserChangedAltitudeEvent(selectedPlane, newAltitude);
+            event = new BackendService.UserChangedAltitudeEvent(selectedPlane, newAltitude);
             backendBus.post(event);
         }
         // NOP
     }
     public void rightClicked(View view) {
         if (selectedPlane != null) {
-            UserChangedDirectionEvent event;
+            BackendService.UserChangedDirectionEvent event;
             Direction newDirection = selectedPlane.getDirection().right();
-            event = new UserChangedDirectionEvent(selectedPlane, newDirection);
+            event = new BackendService.UserChangedDirectionEvent(selectedPlane, newDirection);
             backendBus.post(event);
         }
         // NOP
     }
     public void leftClicked(View view) {
         if (selectedPlane != null) {
-            UserChangedDirectionEvent event;
+            BackendService.UserChangedDirectionEvent event;
             Direction newDirection = selectedPlane.getDirection().left();
-            event = new UserChangedDirectionEvent(selectedPlane, newDirection);
+            event = new BackendService.UserChangedDirectionEvent(selectedPlane, newDirection);
             backendBus.post(event);
         }
         // NOP
@@ -147,44 +147,6 @@ public class GameActivity extends AppCompatActivity {
             altStatusText.setText("");
         }else {
             altStatusText.setText(getString(R.string.alt_status_text, selectedPlane.getDestinationExitNo()));
-        }
-    }
-
-    /* An event that communicates the user's desires about altitude when things are changed. */
-    public class UserChangedAltitudeEvent {
-        private Plane plane;
-        private int newAltitude;
-
-        public UserChangedAltitudeEvent(Plane plane, int newAltitude) {
-            this.plane = plane;
-            this.newAltitude = newAltitude;
-        }
-
-        public Plane getPlane() {
-            return plane;
-        }
-
-        public int getNewAltitude() {
-            return newAltitude;
-        }
-    }
-
-    /* An event that communicates the user's desires about direction when things are changed. */
-    public class UserChangedDirectionEvent {
-        private Plane plane;
-        private Direction direction;
-
-        public UserChangedDirectionEvent(Plane plane, Direction newDirection) {
-            this.plane = plane;
-            this.direction = newDirection;
-        }
-
-        public Plane getPlane() {
-            return plane;
-        }
-
-        public Direction getDirection() {
-            return direction;
         }
     }
 }

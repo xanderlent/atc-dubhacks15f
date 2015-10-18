@@ -77,15 +77,53 @@ public class BackendService extends Service {
 
     /* Get notified about events due to the user changing altitude, and update accordingly. */
     @Subscribe
-    public void userChangedAltitude(GameActivity.UserChangedAltitudeEvent event) {
+    public void userChangedAltitude(UserChangedAltitudeEvent event) {
         backend.changeAltitude(event.getPlane(), event.getNewAltitude());
+    }
+
+    /* An event that communicates the user's desires about altitude when things are changed. */
+    public static class UserChangedAltitudeEvent {
+        private Plane plane;
+        private int newAltitude;
+
+        public UserChangedAltitudeEvent(Plane plane, int newAltitude) {
+            this.plane = plane;
+            this.newAltitude = newAltitude;
+        }
+
+        public Plane getPlane() {
+            return plane;
+        }
+
+        public int getNewAltitude() {
+            return newAltitude;
+        }
     }
 
     /* Get notified about events due to the user changing direction, and update accordingly. */
     @Subscribe
-    public void userChangedDirection(GameActivity.UserChangedDirectionEvent event) {
+    public void userChangedDirection(UserChangedDirectionEvent event) {
         backend.turnPlane(event.getPlane(), event.getDirection());
         firePlanesChanged();
+    }
+
+    /* An event that communicates the user's desires about direction when things are changed. */
+    public static class UserChangedDirectionEvent {
+        private Plane plane;
+        private Direction direction;
+
+        public UserChangedDirectionEvent(Plane plane, Direction newDirection) {
+            this.plane = plane;
+            this.direction = newDirection;
+        }
+
+        public Plane getPlane() {
+            return plane;
+        }
+
+        public Direction getDirection() {
+            return direction;
+        }
     }
 
     private void firePlanesChanged() {
