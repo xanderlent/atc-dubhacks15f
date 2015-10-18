@@ -3,6 +3,7 @@ package com.xanderlent.android.mmatc;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -21,7 +22,12 @@ public class GameActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }catch (NullPointerException e){
+            Log.e("Error", "Null pointer exception");
+        }
+       // getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }
