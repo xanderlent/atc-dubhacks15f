@@ -29,7 +29,7 @@
     </TextView>
 
     <LinearLayout
-        android:weightSum="12"
+        android:weightSum="8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"
@@ -41,7 +41,7 @@
             android:text="@string/down_button_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="2"
 
             android:onClick="downClicked"
             android:id="@+id/down" />
@@ -68,7 +68,7 @@
             android:text="@string/right_button_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="2"
 
             android:onClick="rightClicked"
             android:id="@+id/right" />
