@@ -26,18 +26,17 @@
     </FrameLayout>
 
     <EditText
-        android:text="Please enter your user name here"
+        android:hint="@string/user_name_hint"
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_weight="1"
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="User name:"
+        android:text="@string/user_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"

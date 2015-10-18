@@ -4,4 +4,6 @@
     <string name="start">Start Game</string>
     <string name="title_activity_starting">StartingActivity</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="user_name_label">User name:</string>
+    <string name="user_name_hint">Please enter your user name here</string>
 </resources>
