@@ -20,7 +20,7 @@ public class BackendService extends Service {
         backendBus = new Bus();
         backendBus.register(this);
         backend = new Backend();
-        // TODO Create Timer to trigger tick()
+        // TODO Create Timer/AlarmManager to trigger tick()
     }
 
     @Override

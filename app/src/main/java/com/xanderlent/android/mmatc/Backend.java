@@ -12,6 +12,9 @@ public class Backend {
     public Backend() {
         random = new Random();
         planes = Collections.synchronizedCollection(new ArrayList<Plane>());
+        planes.add(new Plane("Ali", new Position(10, 2), Direction.SOUTH_EAST, 3));
+        planes.add(new Plane("Eco", new Position(4, 4), Direction.SOUTH_EAST, 1));
+        planes.add(new Plane("Dia", new Position(5, 15), Direction.NORTH, 4));
     }
 
     public synchronized Collection<Plane> getPlanes() {
