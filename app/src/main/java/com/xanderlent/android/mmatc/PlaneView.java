@@ -14,6 +14,7 @@ import android.view.View;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 
 public class PlaneView extends View {
     public static final int GRID_WIDTH = 20;
@@ -27,6 +28,7 @@ public class PlaneView extends View {
     private Paint strokePaint;
     private TextPaint textPaint;
     private Collection<Plane> planes;
+    private Map<Edge, String> neighborNames;
     private Plane selectedPlane;
     private SelectionChangeCallback selectionChangeCallback;
 
@@ -62,12 +64,18 @@ public class PlaneView extends View {
         textPaint.setTextAlign(Paint.Align.CENTER);
 
         planes = Collections.emptyList();
+        neighborNames = Collections.emptyMap();
         selectedPlane = null;
         selectionChangeCallback = null;
     }
 
     public void setPlanes(Collection<Plane> planes) {
         this.planes = planes;
+        invalidate();
+    }
+
+    public void setNeighborNames(Map<Edge, String> neighborNames) {
+        this.neighborNames = neighborNames;
         invalidate();
     }
 
@@ -91,6 +99,25 @@ public class PlaneView extends View {
         fillPaint.setColor(Color.WHITE);
         canvas.drawRect(0, 0, minimalDimension, minimalDimension, fillPaint);
         canvas.drawRect(0, 0, minimalDimension, minimalDimension, strokePaint);
+
+        textPaint.setTextSize(minimalDimension / GRID_HEIGHT);
+        textPaint.setColor(Color.LTGRAY);
+        if(neighborNames.containsKey(Edge.NORTH)) {
+            canvas.drawText(neighborNames.get(Edge.NORTH), minimalDimension / 2, minimalDimension / GRID_WIDTH, textPaint);
+        }
+        if(neighborNames.containsKey(Edge.SOUTH)) {
+            canvas.drawText(neighborNames.get(Edge.SOUTH), minimalDimension / 2, minimalDimension - minimalDimension / GRID_WIDTH, textPaint);
+        }
+        canvas.save();
+        canvas.rotate(-90);
+        if(neighborNames.containsKey(Edge.WEST)) {
+            canvas.drawText(neighborNames.get(Edge.WEST), -minimalDimension / 2, minimalDimension / GRID_WIDTH, textPaint);
+        }
+        if(neighborNames.containsKey(Edge.EAST)) {
+            canvas.drawText(neighborNames.get(Edge.EAST), -minimalDimension / 2, minimalDimension - minimalDimension / GRID_WIDTH, textPaint);
+        }
+        canvas.restore();
+        textPaint.setColor(Color.BLACK);
 
         textPaint.setTextSize(minimalDimension / GRID_HEIGHT * 0.7f);
 
