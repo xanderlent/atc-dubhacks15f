@@ -116,7 +116,7 @@ public class BluetoothService extends Service {
         bus = new Bus();
         bus.register(this);
         wantShutdown = false;
-        adapter = BluetoothAdapter.getDefaultAdapter();
+        adapter = BluetoothAdapter.getDefaultAdapter(); // TODO this is null on devices w/o BT
         peers = Collections.synchronizedCollection(new ArrayList<Peer>(NUM_EDGES));
     }
 

@@ -224,6 +224,7 @@ public class BackendService extends Service {
             BluetoothService.Binder binder = (BluetoothService.Binder) service;
             bluetoothBus = binder.getBus();
             bluetoothBus.register(BackendService.this);
+            binder.start("FakeName"); // TODO Actually pass the name around...
             isBoundToBluetooth = true;
         }
 
