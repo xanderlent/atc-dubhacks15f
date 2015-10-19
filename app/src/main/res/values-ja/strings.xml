@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">mMATC</string>
     <!-- TODO Get Android's official Japanese translation of 'Settings'-->
-    <string name="action_settings">セッチング</string>
+    <string name="action_settings">設定</string>
     <string name="start">初めて</string>
     <!-- TODO Retranslate string for Game -->
     <string name="title_activity_game">ゲーム</string>
