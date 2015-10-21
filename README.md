@@ -1,5 +1,6 @@
-# atc-dubhacks15f
-An ATC Game for Android (A DubHacks 15F project)
+# mMATC
+An ATC Game for Android
+(That started life as a DubHacks 15F project.)
 
 ATC is a classic real time strategy (RTS) game. We've been making our own version, for Android, with multiplayer capabilities. It maybe even works!
 
